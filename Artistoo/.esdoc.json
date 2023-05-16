@@ -1,0 +1,25 @@
+{
+  "source": "./src",
+  "destination": "./esdocs",
+  "plugins": [
+    {
+      "name": "esdoc2-standard-plugin",
+      "option": {
+        "test" : {
+          "source" : "./spec/",
+          "interfaces": ["describe", "it", "context", "suite", "test"],
+          "includes": ["(spec|Spec|test|Test)\\.js$"],
+          "excludes": ["\\.config\\.js$"]
+        },
+        "brand": {
+          "repository": "https://github.com/ingewortel/artistoo"
+        }
+      }
+    },
+    {
+    	"name": "esdoc2-publish-html-plugin",
+    	"option": {
+    		"template" : "esdoc-template-artistoo"
+    	}
+    }]
+}
