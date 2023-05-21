@@ -21,7 +21,7 @@ body{
 let config = {
     // Grid settings
     ndim : 2,
-    field_size : [200,200],
+    field_size : [500,200],
 
     // CPM parameters and configuration
     conf : {
@@ -100,28 +100,10 @@ function initializeGrid(){
 }
 
 function buildChannel(){
-    this.channelvoxels = []
-    const xOffset = 30, yOffset = 30
-    const grid = 3
-    const dx = Math.floor( this.C.extents[0]/grid ), dy = Math.floor( this.C.extents[1]/grid )
-    const radius = 10
-    
-    for( let x = xOffset; x < this.C.extents[0]; x+= dx ){
-        for( let y = yOffset; y < this.C.extents[1]; y+= dy ){
-            const center = [x,y]
-            
-            for( let xx = center[0]-radius; xx <= center[0]+radius; xx++ ){
-                for( let yy = center[1]-radius; yy <= center[1]+radius; yy++){
-                    let dx = Math.abs( xx-center[0] ), dy = Math.abs( yy-center[1] )
-                    if( Math.sqrt( dx*dx + dy*dy ) < radius ){
-                        // Add obstacle object
-                        this.channelvoxels.push( [xx,yy] )
-                    }	
-                }
-            }
-            
-        }
-    }
+    this.channelvoxels = this.gm.makePlane( [], 1, 0 )
+	let gridheight = this.C.extents[1]
+	this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, gridheight-1 )
+		
     
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
