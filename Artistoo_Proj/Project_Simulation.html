@@ -99,17 +99,18 @@ function initializeGrid(){
     this.buildChannel()
 }
 
-function buildChannel(){
-    this.channelvoxels = this.gm.makePlane( [], 1, 0 )
+function buildChannel(){ 
+    this.channelvoxels = this.gm.makeCircle(  [300,0], 75, [] )
+    this.channelvoxels = this.gm.makeCircle(  [300,200], 75, this.channelvoxels )
+
+    this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
 	let gridheight = this.C.extents[1]
 	this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, gridheight-1 )
-		
     
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
         BARRIER_VOXELS : this.channelvoxels
     }) )
-    
 }
 
 /* The following custom methods are used for control buttons on the html page.*/
