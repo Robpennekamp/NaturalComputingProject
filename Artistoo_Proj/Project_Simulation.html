@@ -21,7 +21,7 @@ body{
 let config = {
     // Grid settings
     ndim : 2,
-    field_size : [500,200],
+    field_size : [650,200],
 
     // CPM parameters and configuration
     conf : {
@@ -110,13 +110,21 @@ function buildChannel(){
     //this.channelvoxels = this.gm.makeCircle(  [50, 50], 50, [])
 
 
-    this.channelvoxels = this.gm.makeCircle(  [300,-115], 180, [])
-    this.channelvoxels = this.gm.makeCircle(  [300,315], 180, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [450,-115], 200, [])
+    this.channelvoxels = this.gm.makeCircle(  [450,315], 200, this.channelvoxels )
 
+    //tumoren
+    //this.channelvoxels = this.gm.makeCircle(  [475,150], 25, this.channelvoxels )
+    //this.channelvoxels = this.gm.makeCircle(  [450,40], 40, this.channelvoxels )
+    //this.channelvoxels = this.gm.makeCircle(  [550,30], 57, this.channelvoxels )
+
+
+    
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
 	let gridheight = this.C.extents[1]
 	this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, gridheight-1 )
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 0)
+    this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 649)
 
     // grid.pixels
 
@@ -148,13 +156,13 @@ function seedCells( ncells ){
 function seedCells(ncells) {
     // Define Area size, spawning cell width + height dependent on the amount of cells which are spawned.
     const areaSize = Math.ceil(Math.sqrt(ncells));
-    const cellWidth = 100 / areaSize;
-    const cellHeight = 200 / areaSize;
+    const cellWidth = (150 / areaSize);
+    const cellHeight = (190 / areaSize);
 
     // Set limiter on the amount of cells seeded.
     let count = 0;
-    for (let y = 0; y < 200; y += cellHeight) {
-        for (let x = 0; x < 100; x += cellWidth) {
+    for (let y = 5; y < 195; y += cellHeight) {
+        for (let x = 20; x < 170; x += cellWidth) {
             sim.gm.seedCellsInCircle(1, 1, [x + cellWidth / 2, y + cellHeight / 2], 5);
             count += 1;
             if (count === ncells) {
