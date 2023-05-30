@@ -128,6 +128,12 @@ function buildChannel(){
 
     // grid.pixels
 
+    //this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 315)
+    //this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 550)
+    this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [200,30], 20, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
+
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
         BARRIER_VOXELS : this.channelvoxels
