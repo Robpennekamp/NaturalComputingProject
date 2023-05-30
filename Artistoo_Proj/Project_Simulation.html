@@ -74,6 +74,10 @@ sim.Cim = new CPM.Canvas( sim.C, {
     zoom:sim.conf.zoom, 
     parentElement : document.getElementById("sim")
 } )
+sim.C.add( new CPM.PreferredDirectionConstraint( {
+	LAMBDA_DIR : [0,100], 
+	DIR : [[0,0],[1,0]]
+} ) )
 sim.helpClasses[ "canvas" ] = true
 meter = new FPSMeter({left:"auto", right:"5px"})
 step()
@@ -112,7 +116,9 @@ function buildChannel(){
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
 	let gridheight = this.C.extents[1]
 	this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, gridheight-1 )
-    
+
+    // grid.pixels
+
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
         BARRIER_VOXELS : this.channelvoxels
