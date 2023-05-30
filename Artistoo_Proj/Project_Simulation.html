@@ -110,12 +110,13 @@ function buildChannel(){
     //this.channelvoxels = this.gm.makeCircle(  [50, 50], 50, [])
 
 
-    this.channelvoxels = this.gm.makeCircle(  [300,0], 75, [])
-    this.channelvoxels = this.gm.makeCircle(  [300,200], 75, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [300,-115], 180, [])
+    this.channelvoxels = this.gm.makeCircle(  [300,315], 180, this.channelvoxels )
 
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
 	let gridheight = this.C.extents[1]
 	this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, gridheight-1 )
+    this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 0)
 
     // grid.pixels
 
