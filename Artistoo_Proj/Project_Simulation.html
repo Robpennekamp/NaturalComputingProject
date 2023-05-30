@@ -100,7 +100,13 @@ function initializeGrid(){
 }
 
 function buildChannel(){ 
-    this.channelvoxels = this.gm.makeCircle(  [300,0], 75, [] )
+    // FF snel checken om te kijken of we cirkels kunnen maken waar we de cells in kunnen laten spawnen.
+    // 		
+    // van [0, 0] tot [100, 200]
+    //this.channelvoxels = this.gm.makeCircle(  [50, 50], 50, [])
+
+
+    this.channelvoxels = this.gm.makeCircle(  [300,0], 75, [])
     this.channelvoxels = this.gm.makeCircle(  [300,200], 75, this.channelvoxels )
 
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
@@ -131,6 +137,29 @@ function seedCells( ncells ){
 		seedCell( 1 )
 	}
 }
+
+function seedCells(ncells) {
+    // Define Area size, spawning cell width + height dependent on the amount of cells which are spawned.
+    const areaSize = Math.ceil(Math.sqrt(ncells));
+    const cellWidth = 100 / areaSize;
+    const cellHeight = 200 / areaSize;
+
+    // Set limiter on the amount of cells seeded.
+    let count = 0;
+    for (let y = 0; y < 200; y += cellHeight) {
+        for (let x = 0; x < 100; x += cellWidth) {
+            sim.gm.seedCellsInCircle(1, 1, [x + cellWidth / 2, y + cellHeight / 2], 5);
+            count += 1;
+            if (count === ncells) {
+                return;
+            }
+        }
+    }
+}
+
+
+
+
 function killCell(){
 	let t
 	let cells = Object.keys( sim.C.getStat( CPM.PixelsByCell ) )
@@ -156,7 +185,7 @@ function killAllCells(){
 </script>
 </head>
 <body onload="initialize()">
-<h1>Assignment 1 natural computing</h1>
+<h1>Project natural computing</h1>
 <hr>
 <div class="slidecontainer">
     <form autocomplete="off">
