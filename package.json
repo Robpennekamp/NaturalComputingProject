@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "mersenne-twister": "^1.1.0",
+    "n8n": "^0.228.2"
+  }
+}

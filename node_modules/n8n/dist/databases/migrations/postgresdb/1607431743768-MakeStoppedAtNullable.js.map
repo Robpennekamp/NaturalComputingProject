@@ -1,0 +1,1 @@
+{"version":3,"file":"1607431743768-MakeStoppedAtNullable.js","sourceRoot":"","sources":["../../../../src/databases/migrations/postgresdb/1607431743768-MakeStoppedAtNullable.ts"],"names":[],"mappings":";;;AAEA,MAAa,kCAAkC;IAC9C,KAAK,CAAC,EAAE,CAAC,EAAE,WAAW,EAAE,WAAW,EAAoB;QACtD,MAAM,WAAW,CAAC,KAAK,CACtB,cAAc,GAAG,WAAW,GAAG,yDAAyD,CACxF,CAAC;IACH,CAAC;CACD;AAND,gFAMC"}

@@ -1,4 +1,4 @@
-let CPM = require("artistoo-cjs.js")
+let CPM = require(".\\artistoo-cjs.js")
 
 let config = {
     // Grid settings
@@ -44,7 +44,7 @@ let config = {
     }
 }
 
-let sim, meter
+let sim
 function initialize(){
 let custommethods = {
         initializeGrid : initializeGrid,
@@ -52,26 +52,15 @@ let custommethods = {
         drawBelow : drawBelow
      }
 sim = new CPM.Simulation( config, custommethods )
-sim.Cim = new CPM.Canvas( sim.C, {
-    zoom:sim.conf.zoom, 
-    parentElement : document.getElementById("sim")
-} )
 sim.C.add( new CPM.PreferredDirectionConstraint( {
 	LAMBDA_DIR : [0,100], 
 	DIR : [[0,0],[1,0]]
 } ) )
-sim.helpClasses[ "canvas" ] = true
-meter = new FPSMeter({left:"auto", right:"5px"})
 step()
 }
 
 function step(){
     sim.step()
-    meter.tick()
-
-if( sim.conf["RUNTIME_BROWSER"] == "Inf" | sim.time+1 < sim.conf["RUNTIME_BROWSER"] ){
-    requestAnimationFrame( step )
-}
 }
 
 function drawBelow(){
@@ -122,69 +111,5 @@ function buildChannel(){
     }) )
 }
 
-/* The following custom methods are used for control buttons on the html page.*/
-
-function startsim(){
-	if( !sim.running ){
-		sim.running = true
-	}
-}
-function stopsim(){
-	sim.running = false
-}
-function seedCell( k ){
-	sim.gm.seedCell(k)
-}
-function seedCells( ncells ){
-	for( let i = 0; i < ncells; i++ ){
-		seedCell( 1 )
-	}
-}
-
-function seedCells(ncells) {
-    // Define Area size, spawning cell width + height dependent on the amount of cells which are spawned.
-    const areaSize = Math.ceil(Math.sqrt(ncells));
-    const cellWidth = (150 / areaSize);
-    const cellHeight = (190 / areaSize);
-
-    // Set limiter on the amount of cells seeded.
-    let count = 0;
-    for (let y = 5; y < 195; y += cellHeight) {
-        for (let x = 20; x < 170; x += cellWidth) {
-            sim.gm.seedCellsInCircle(1, 1, [x + cellWidth / 2, y + cellHeight / 2], 5);
-            count += 1;
-            if (count === ncells) {
-                return;
-            }
-        }
-    }
-}
-
-
-
-
-function killCell(){
-	let t
-	let cells = Object.keys( sim.C.getStat( CPM.PixelsByCell ) )
-	if( cells.length > 0 ){
-		t = cells.pop()
-		for( let cp of sim.C.cellPixels() ){
-			if( cp[1] == t ){
-				sim.C.setpix( cp[0], 0 )
-			}
-		}
-	}
-	sim.C.stat_values = {}
-
-}
-function killAllCells(){
-	let cells = Object.keys( sim.C.getStat( CPM.PixelsByCell ) )
-	if( cells.length == 0 ) return
-	for( let cp of sim.C.cellPixels() ){
-		sim.C.setpix( cp[0], 0 )
-	}
-}
-
-
-
+initialize()
 sim.run()
