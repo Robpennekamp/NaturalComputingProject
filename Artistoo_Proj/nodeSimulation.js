@@ -28,12 +28,12 @@ let config = {
     // Simulation setup and configuration
     simsettings : {
         // Cells on the grid
-        NRCELLS : [10,0],						// Number of cells to seed for all
-                                            // non-background cellkinds.
+        NRCELLS : [100,0],						// Number of cells to seed for all
+                                                // non-background cellkinds.
         // Runtime etc
         BURNIN : 0,
         RUNTIME : 500,
-        RUNTIME_BROWSER : "Inf",
+        //RUNTIME_BROWSER : "Inf",
         
         // Visualization
         CANVASCOLOR : "eaecef",
@@ -58,9 +58,13 @@ sim.C.add( new CPM.PreferredDirectionConstraint( {
 } ) )
 step()
 }
-
+function output(){
+    console.log(sim.getStat());
+}
 function step(){
+    console.log('Hi')
     sim.step()
+    
 }
 
 function drawBelow(){
@@ -80,7 +84,7 @@ function buildChannel(){
     // van [0, 0] tot [100, 200]
     //this.channelvoxels = this.gm.makeCircle(  [50, 50], 50, [])
 
-
+    // Vernauwing
     this.channelvoxels = this.gm.makeCircle(  [450,-115], 200, [])
     this.channelvoxels = this.gm.makeCircle(  [450,315], 200, this.channelvoxels )
 
@@ -90,20 +94,47 @@ function buildChannel(){
     //this.channelvoxels = this.gm.makeCircle(  [550,30], 57, this.channelvoxels )
 
 
-    
+    // Map settings
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
 	let gridheight = this.C.extents[1]
 	this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, gridheight-1 )
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 0)
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 649)
 
-    // grid.pixels
+    // Setting #1:
 
-    //this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 315)
-    //this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 550)
+    /*
     this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
-    this.channelvoxels = this.gm.makeCircle(  [200,30], 20, this.channelvoxels )
-    this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
+    */
+
+    // Setting #2:
+
+    
+    //this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
+    //this.channelvoxels = this.gm.makeCircle(  [200,30], 20, this.channelvoxels )
+    //this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
+    
+
+    // Setting #3:
+    /*
+    const x0 = 180
+    const x1 = 280;
+    const y0 = 20;
+    const y1 = 200;
+
+
+    for(let x = x0; x <= x1; x += 30){
+        for(let y = y0; y <= y1; y += 40){
+            this.channelvoxels = this.gm.makeCircle( [x, y], 5, this.channelvoxels)
+        }
+    }
+    */
+
+    
+    //this.channelvoxels = this.gm.makeCircle(  [280,70], 7, this.channelvoxels )
+    //this.channelvoxels = this.gm.makeCircle(  [200,70], 7, this.channelvoxels )
+    
+
 
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
