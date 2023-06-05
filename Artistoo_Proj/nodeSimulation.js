@@ -9,6 +9,7 @@ let config = {
     conf : {
         // Basic CPM parameters
         torus : [false,false],				// Should the grid have linked borders?
+        seed : 100,                           // Seed for random number generation.
         T : 20,								// CPM temperature       
         // Adhesion parameters:
         J: [[0,20], [0,0]],
@@ -41,35 +42,44 @@ let config = {
         ACTCOLOR : [true],					// Should pixel activity values be displayed?
         SHOWBORDERS : [false],				// Should cellborders be displayed?
         zoom : 2,							// zoom in on canvas with this factor.
+
+        // Output images
+		SAVEIMG : true,					// Should a png image of the grid be saved
+		// during the simulation?
+		IMGFRAMERATE : 1,					// If so, do this every <IMGFRAMERATE> MCS.
+		SAVEPATH : "..\\output\\img",	// ... And save the image in this folder.
+		EXPNAME : "BaseCase",				// Used for the filename of output images.
+		
+		// Output stats etc
+		STATSOUT : { browser: false, node: true }, // Should stats be computed?
+		LOGRATE : 10							// Output stats every <LOGRATE> MCS.
     }
 }
 
 let sim
+
 function initialize(){
-let custommethods = {
-        initializeGrid : initializeGrid,
-        buildChannel : buildChannel,
-        drawBelow : drawBelow
-     }
-sim = new CPM.Simulation( config, custommethods )
-sim.C.add( new CPM.PreferredDirectionConstraint( {
-	LAMBDA_DIR : [0,100], 
-	DIR : [[0,0],[1,0]]
-} ) )
-step()
+    let custommethods = {
+            initializeGrid : initializeGrid,
+            buildChannel : buildChannel,
+            drawBelow : drawBelow
+        }
+    sim = new CPM.Simulation( config, custommethods )
+    sim.C.add( new CPM.PreferredDirectionConstraint( {
+        LAMBDA_DIR : [0,100], 
+        DIR : [[0,0],[1,0]]
+    } ) )
+    sim.gm.seedCell(1)
+    step()
 }
-function output(){
-    console.log(sim.getStat());
-}
+
 function step(){
-    console.log('Hi')
     sim.step()
-    
 }
 
 function drawBelow(){
-// Set obstacles 
-this.Cim.drawPixelSet( this.channelvoxels, "AAAAAA" ) 
+    // Set obstacles 
+    this.Cim.drawPixelSet( this.channelvoxels, "AAAAAA" ) 
 }
 
 function initializeGrid(){
