@@ -9,7 +9,6 @@ let config = {
     conf : {
         // Basic CPM parameters
         torus : [false,false],				// Should the grid have linked borders?
-        seed : 100,                           // Seed for random number generation.
         T : 20,								// CPM temperature       
         // Adhesion parameters:
         J: [[0,20], [0,0]],
@@ -39,43 +38,37 @@ let config = {
         // Visualization
         CANVASCOLOR : "eaecef",
         CELLCOLOR : ["000000"],
-        ACTCOLOR : [true],					// Should pixel activity values be displayed?
-        SHOWBORDERS : [false],				// Should cellborders be displayed?
-        zoom : 2,							// zoom in on canvas with this factor.
+        ACTCOLOR : [true],					        // Should pixel activity values be displayed?
+        SHOWBORDERS : [false],				        // Should cellborders be displayed?
+        zoom : 2,							        // zoom in on canvas with this factor.
 
         // Output images
-		SAVEIMG : true,					// Should a png image of the grid be saved
+		SAVEIMG : true,					            // Should a png image of the grid be saved
 		// during the simulation?
-		IMGFRAMERATE : 1,					// If so, do this every <IMGFRAMERATE> MCS.
-		SAVEPATH : "..\\output\\img",	// ... And save the image in this folder.
-		EXPNAME : "BaseCase",				// Used for the filename of output images.
+		IMGFRAMERATE : 1,					        // If so, do this every <IMGFRAMERATE> MCS.
+		SAVEPATH : "..\\output\\img",	            // ... And save the image in this folder.
+		EXPNAME : "BaseCase",				        // Used for the filename of output images.
 		
 		// Output stats etc
-		STATSOUT : { browser: false, node: true }, // Should stats be computed?
-		LOGRATE : 10							// Output stats every <LOGRATE> MCS.
+		STATSOUT : { browser: false, node: true },  // Should stats be computed?
+		LOGRATE : 10							    // Output stats every <LOGRATE> MCS.
     }
 }
 
-let sim
 
-function initialize(){
-    let custommethods = {
-            initializeGrid : initializeGrid,
-            buildChannel : buildChannel,
-            drawBelow : drawBelow
-        }
-    sim = new CPM.Simulation( config, custommethods )
-    sim.C.add( new CPM.PreferredDirectionConstraint( {
-        LAMBDA_DIR : [0,100], 
-        DIR : [[0,0],[1,0]]
-    } ) )
-    sim.gm.seedCell(1)
-    step()
+let custommethods = {
+    initializeGrid : initializeGrid,
+    drawBelow : drawBelow
 }
 
-function step(){
-    sim.step()
-}
+let sim = new CPM.Simulation( config, custommethods )
+
+sim.C.add( new CPM.PreferredDirectionConstraint( {
+    LAMBDA_DIR : [0,100], 
+    DIR : [[0,0],[1,0]]
+} ) )
+
+
 
 function drawBelow(){
     // Set obstacles 
@@ -83,12 +76,16 @@ function drawBelow(){
 }
 
 function initializeGrid(){
-    // add the initializer if not already there
-    if( !this.helpClasses["gm"] ){ this.addGridManipulator() }
-    this.buildChannel()
-}
+    if( !this.helpClasses["gm"] ){ 
+        this.addGridManipulator() 
+    }
 
-function buildChannel(){ 
+	for( let i = 0 ; i < this.C.extents[0] ; i += 100 ){
+		for( let j = 0 ; j < this.C.extents[1] ; j += 100 ){
+			this.gm.seedCellAt( 1, [i,j] )
+		}
+	}
+
     // FF snel checken om te kijken of we cirkels kunnen maken waar we de cells in kunnen laten spawnen.
     // 		
     // van [0, 0] tot [100, 200]
@@ -140,11 +137,9 @@ function buildChannel(){
     }
     */
 
-    
     //this.channelvoxels = this.gm.makeCircle(  [280,70], 7, this.channelvoxels )
     //this.channelvoxels = this.gm.makeCircle(  [200,70], 7, this.channelvoxels )
     
-
 
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
@@ -152,5 +147,5 @@ function buildChannel(){
     }) )
 }
 
-initialize()
+
 sim.run()
