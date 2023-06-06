@@ -32,7 +32,7 @@ let config = {
                                                 // non-background cellkinds.
         // Runtime etc
         BURNIN : 0,
-        RUNTIME : 500,
+        RUNTIME : 5000,
         //RUNTIME_BROWSER : "Inf",
         
         // Visualization
@@ -45,13 +45,13 @@ let config = {
         // Output images
 		SAVEIMG : true,					            // Should a png image of the grid be saved
 		// during the simulation?
-		IMGFRAMERATE : 1,					        // If so, do this every <IMGFRAMERATE> MCS.
+		IMGFRAMERATE : 50,					        // If so, do this every <IMGFRAMERATE> MCS.
 		SAVEPATH : "..\\output\\img",	            // ... And save the image in this folder.
 		EXPNAME : "BaseCase",				        // Used for the filename of output images.
 		
 		// Output stats etc
 		STATSOUT : { browser: false, node: true },  // Should stats be computed?
-		LOGRATE : 10							    // Output stats every <LOGRATE> MCS.
+		LOGRATE : 30							    // Output stats every <LOGRATE> MCS.
     }
 }
 
@@ -80,11 +80,23 @@ function initializeGrid(){
         this.addGridManipulator() 
     }
 
-	for( let i = 0 ; i < this.C.extents[0] ; i += 100 ){
-		for( let j = 0 ; j < this.C.extents[1] ; j += 100 ){
-			this.gm.seedCellAt( 1, [i,j] )
-		}
-	}
+	
+    // Define Area size, spawning cell width + height dependent on the amount of cells which are spawned.
+    const areaSize = Math.ceil(Math.sqrt(100));
+    const cellWidth = (150 / areaSize);
+    const cellHeight = (190 / areaSize);
+
+    // Set limiter on the amount of cells seeded.
+    let count = 0;
+    for (let y = 5; y < 195; y += cellHeight) {
+        for (let x = 10; x < 170; x += cellWidth) {
+            this.gm.seedCellsInCircle(1, 1, [x + cellWidth / 2, y + cellHeight / 2], 5);
+            count += 1;
+            if (count === 100) {
+                break;
+            }
+        }
+    }
 
     // FF snel checken om te kijken of we cirkels kunnen maken waar we de cells in kunnen laten spawnen.
     // 		
