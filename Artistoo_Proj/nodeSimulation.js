@@ -45,13 +45,13 @@ let config = {
         // Output images
 		SAVEIMG : true,					            // Should a png image of the grid be saved
 		// during the simulation?
-		IMGFRAMERATE : 50,					        // If so, do this every <IMGFRAMERATE> MCS.
+		IMGFRAMERATE : 250,					        // If so, do this every <IMGFRAMERATE> MCS.
 		SAVEPATH : "..\\output\\img",	            // ... And save the image in this folder.
 		EXPNAME : "BaseCase",				        // Used for the filename of output images.
 		
 		// Output stats etc
 		STATSOUT : { browser: false, node: true },  // Should stats be computed?
-		LOGRATE : 30							    // Output stats every <LOGRATE> MCS.
+		LOGRATE : 100							    // Output stats every <LOGRATE> MCS.
     }
 }
 

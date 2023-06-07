@@ -7768,9 +7768,9 @@ class Simulation {
 			let thecentroid = allcentroids[cid];
 			
 			// eslint-disable-next-line no-console
-			console.log( this.time + "\t" + cid + "\t" + 
-				this.C.cellKind(cid) + "\t" + thecentroid.join("\t") );
-			
+			if(thecentroid[0] >= 350 && thecentroid[0] <= 550){
+				console.log( this.time + "\t" + cid + "\t" + this.C.cellKind(cid) + "\t" + thecentroid.join("\t") );
+			}
 		}
 
 	}
