@@ -7474,6 +7474,7 @@ class Simulation {
 		@param {HexColor[]} [simsettings.BORDERCOL = "000000"] - color to draw cellborders of
 			each {@link CellKind} in. Defaults to black. 
 		*/
+
 	constructor( config, custommethods ){
 
 		/** To check from outside if an object is a Simulation; doing this with
@@ -7556,6 +7557,9 @@ class Simulation {
 		@private
 		@type {boolean}*/
 		this.running = true;
+
+
+		this.cellsArray = [];
 		
 		// ========= Attached objects
 		
@@ -7572,6 +7576,8 @@ class Simulation {
 		their values in helpClasses to 'true', so they don't have to be added again.
 		@type {object}*/ 
 		this.helpClasses = { gm: false, canvas: false };
+
+		this.cellsArray = []
 
 		/** Add additional constraints.
 		 * @type {Constraint[]}
@@ -7738,11 +7744,10 @@ class Simulation {
 	
 	}
 	
-	
 	/** Method to log statistics.
 	The default method logs time, {@link CellId}, {@link CellKind}, and the 
 	{@ArrayCoordinate} of the cell's centroid to the console.
-	
+
 	If you want to compute other stats (see subclasses of {@link Stat} for options)
 	you can use the custommethods argument of the {@link constructor} to overwrite 
 	this with your own drawCanvas method.
@@ -7768,11 +7773,32 @@ class Simulation {
 			let thecentroid = allcentroids[cid];
 			
 			// eslint-disable-next-line no-console
-			if(thecentroid[0] >= 350 && thecentroid[0] <= 550){
-				console.log( this.time + "\t" + cid + "\t" + this.C.cellKind(cid) + "\t" + thecentroid.join("\t") );
+			if((thecentroid[0] >= 350 && thecentroid[0] <= 351)){
+				//let cell = (this.time + "," + "id:" + cid + ",entry" + "," + this.C.cellKind(cid) + "," + thecentroid);
+
+				let cell = {id: cid+"-en", event: "entry", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
+
+
+				if(!this.cellsArray.includes(cell.id)){
+					this.cellsArray.push(cell);
+				}
+			}
+			if((thecentroid[0] >= 550 && thecentroid[0] <= 551)){
+				//let cell = (this.time + "," + "id:" + cid + ",exit" + "," + this.C.cellKind(cid) + "," + thecentroid);
+				
+				let cell = {id: cid+"-ex", event: "exit", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
+				
+				if(!this.cellsArray.includes(cell.id)){
+					this.cellsArray.push(cell);
+				}
 			}
 		}
+		//console.log(this.cellsArray);
+	}
 
+	getCellsArray(){
+		console.log('hoi')
+		return this.cellsArray;
 	}
 	
 	/** Listener for something that needs to be done after every monte carlo step.

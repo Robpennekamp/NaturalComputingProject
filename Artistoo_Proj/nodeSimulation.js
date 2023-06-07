@@ -51,7 +51,7 @@ let config = {
 		
 		// Output stats etc
 		STATSOUT : { browser: false, node: true },  // Should stats be computed?
-		LOGRATE : 100							    // Output stats every <LOGRATE> MCS.
+		LOGRATE : 10							    // Output stats every <LOGRATE> MCS.
     }
 }
 
@@ -67,8 +67,6 @@ sim.C.add( new CPM.PreferredDirectionConstraint( {
     LAMBDA_DIR : [0,100], 
     DIR : [[0,0],[1,0]]
 } ) )
-
-
 
 function drawBelow(){
     // Set obstacles 
@@ -159,5 +157,31 @@ function initializeGrid(){
     }) )
 }
 
-
 sim.run()
+
+let allCellsArray = []
+
+allCellsArray.push(sim.getCellsArray())
+//console.log(allCellsArray)
+
+const csvString = [
+    [
+      "ID",
+      "Event",
+      "Frame",
+      "Cell kind",
+      "Coordinates"
+    ],
+    ...sim.getCellsArray().map(item => [
+      item.id,
+      item.event,
+      item.frame,
+      item.cellkind,
+      item.coords
+    ])
+  ]
+  .map(e => e.join(",")) 
+   .join("\n");
+
+console.log(csvString);
+
