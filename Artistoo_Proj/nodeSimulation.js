@@ -1,3 +1,5 @@
+
+
 let CPM = require(".\\artistoo-cjs.js")
 
 let config = {
@@ -45,7 +47,7 @@ let config = {
         // Output images
 		SAVEIMG : true,					            // Should a png image of the grid be saved
 		// during the simulation?
-		IMGFRAMERATE : 250,					        // If so, do this every <IMGFRAMERATE> MCS.
+		IMGFRAMERATE : 499,					        // If so, do this every <IMGFRAMERATE> MCS.
 		SAVEPATH : "..\\output\\img",	            // ... And save the image in this folder.
 		EXPNAME : "BaseCase",				        // Used for the filename of output images.
 		
@@ -160,28 +162,34 @@ function initializeGrid(){
 sim.run()
 
 let allCellsArray = []
-
 allCellsArray.push(sim.getCellsArray())
-//console.log(allCellsArray)
 
-const csvString = [
-    [
-      "ID",
-      "Event",
-      "Frame",
-      "Cell kind",
-      "Coordinates"
-    ],
-    ...sim.getCellsArray().map(item => [
-      item.id,
-      item.event,
-      item.frame,
-      item.cellkind,
-      item.coords
-    ])
-  ]
-  .map(e => e.join(",")) 
-   .join("\n");
+allCSVStrings = "";
+allCellsArray.forEach(cellArray => {
+    const csvString = [
+        [
+          "ID",
+          "Event",
+          "Frame",
+          "Cell kind",
+          "Coordinates"
+        ],
+        ...cellArray.map(item => [
+          item.id,
+          item.event,
+          item.frame,
+          item.cellkind,
+          item.coords
+        ])
+      ]
+      .map(e => e.join(",")) 
+       .join("\n");
+    allCSVStrings += csvString;
+});
 
-console.log(csvString);
+console.log(allCSVStrings);
 
+const date = new Date();
+today_date = (date.getMonth()+1) + "-" + date.getDate();
+today_time = date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds();
+sim.saveAsCSV("Simulation_" + today_date + "_" + today_time, allCSVStrings)

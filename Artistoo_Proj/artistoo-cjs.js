@@ -1,10 +1,13 @@
 'use strict';
 
+
+
 Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var MersenneTwister = _interopDefault(require('mersenne-twister'));
+var fileSync = _interopDefault(require('fs'));
 
 /** This base class defines a general grid and provides grid methods that do
  * not depend on the coordinate system used. This class is never used on its
@@ -7797,7 +7800,6 @@ class Simulation {
 	}
 
 	getCellsArray(){
-		console.log('hoi')
 		return this.cellsArray;
 	}
 	
@@ -7859,6 +7861,15 @@ class Simulation {
 			
 		}
 	}
+
+	saveAsCSV(name, file) {
+		const csv = `${this.name},${this.phone},${this.email}\n`;
+		try {
+			fileSync.appendFileSync("..\\output\\files\\" + name + ".csv", file);
+		} catch (err) {
+		  console.error(err);
+		}
+	  }
 	
 }
 
