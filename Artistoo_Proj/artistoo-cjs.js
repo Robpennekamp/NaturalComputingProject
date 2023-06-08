@@ -7802,6 +7802,10 @@ class Simulation {
 	getCellsArray(){
 		return this.cellsArray;
 	}
+
+	clearCellsArray(){
+		this.cellsArray = [];
+	}
 	
 	/** Listener for something that needs to be done after every monte carlo step.
 	This method is empty but can be overwritten via the custommethods 

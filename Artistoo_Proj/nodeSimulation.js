@@ -63,13 +63,6 @@ let custommethods = {
     drawBelow : drawBelow
 }
 
-let sim = new CPM.Simulation( config, custommethods )
-
-sim.C.add( new CPM.PreferredDirectionConstraint( {
-    LAMBDA_DIR : [0,100], 
-    DIR : [[0,0],[1,0]]
-} ) )
-
 function drawBelow(){
     // Set obstacles 
     this.Cim.drawPixelSet( this.channelvoxels, "AAAAAA" ) 
@@ -159,35 +152,44 @@ function initializeGrid(){
     }) )
 }
 
-sim.run()
-
-let allCellsArray = []
-allCellsArray.push(sim.getCellsArray())
-
+let sim;
 allCSVStrings = "";
-allCellsArray.forEach(cellArray => {
-    const csvString = [
-        [
-          "ID",
-          "Event",
-          "Frame",
-          "Cell kind",
-          "Coordinates"
-        ],
-        ...cellArray.map(item => [
-          item.id,
-          item.event,
-          item.frame,
-          item.cellkind,
-          item.coords
-        ])
-      ]
-      .map(e => e.join(",")) 
-       .join("\n");
-    allCSVStrings += csvString;
-});
+for(i=0; i<5; i++){
+    sim = new CPM.Simulation( config, custommethods )
 
-console.log(allCSVStrings);
+    sim.C.add( new CPM.PreferredDirectionConstraint( {
+        LAMBDA_DIR : [0,100], 
+        DIR : [[0,0],[1,0]]
+    } ) )
+
+    sim.clearCellsArray();
+    let csvString = [];
+
+    sim.run()
+
+    csvString = [
+        [
+        "ID",
+        "Event",
+        "Frame",
+        "Cell kind",
+        "Coordinates"
+        ],
+        ...sim.getCellsArray().map(item => [
+        item.id,
+        item.event,
+        item.frame,
+        item.cellkind,
+        item.coords
+        ])
+    ]
+    .map(e => e.join(",")) 
+    .join("\n");
+    allCSVStrings += csvString + "\n";
+
+    console.log(allCSVStrings);
+}
+
 
 const date = new Date();
 today_date = (date.getMonth()+1) + "-" + date.getDate();
