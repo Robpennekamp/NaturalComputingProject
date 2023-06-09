@@ -133,7 +133,7 @@ function initializeGrid(){
 
 let sim;
 let allCSVStrings = "";
-for(i=0; i<5; i++){
+for(i=0; i<100; i++){
     sim = new CPM.Simulation( config, custommethods )
 
     sim.C.add( new CPM.PreferredDirectionConstraint( {

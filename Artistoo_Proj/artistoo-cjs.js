@@ -7868,7 +7868,7 @@ class Simulation {
 	want to perform individual {@link step}s in a requestAnimationFrame for an 
 	animation in a HTML page. */
 	run(){
-		while( this.time < this.conf["RUNTIME"] && this.exitCells.length == 80){
+		while( this.time < this.conf["RUNTIME"] && this.exitCells.length <= 80){
 		
 			this.step();
 			
