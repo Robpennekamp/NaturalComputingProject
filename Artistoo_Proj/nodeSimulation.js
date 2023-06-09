@@ -132,7 +132,7 @@ function initializeGrid(){
 }
 
 let sim;
-allCSVStrings = "";
+let allCSVStrings = "";
 for(i=0; i<5; i++){
     sim = new CPM.Simulation( config, custommethods )
 

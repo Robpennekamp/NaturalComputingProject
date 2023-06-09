@@ -7580,7 +7580,8 @@ class Simulation {
 		@type {object}*/ 
 		this.helpClasses = { gm: false, canvas: false };
 
-		this.cellsArray = []
+		this.cellsArray = [];
+		this.exitCells = [];
 
 		/** Add additional constraints.
 		 * @type {Constraint[]}
@@ -7790,6 +7791,7 @@ class Simulation {
 				let notExists = this.checkCellsArray(cid, "exit")
 				if(notExists){
 					this.cellsArray.push(cell);
+					this.exitCells.push(cell);
 				}
 			}
 		}
@@ -7811,6 +7813,7 @@ class Simulation {
 
 	clearCellsArray(){
 		this.cellsArray = [];
+		this.exitCells = [];
 	}
 	
 	/** Listener for something that needs to be done after every monte carlo step.
@@ -7865,7 +7868,7 @@ class Simulation {
 	want to perform individual {@link step}s in a requestAnimationFrame for an 
 	animation in a HTML page. */
 	run(){
-		while( this.time < this.conf["RUNTIME"] ){
+		while( this.time < this.conf["RUNTIME"] && this.exitCells.length == 80){
 		
 			this.step();
 			
