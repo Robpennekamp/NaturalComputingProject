@@ -7776,27 +7776,33 @@ class Simulation {
 			let thecentroid = allcentroids[cid];
 			
 			// eslint-disable-next-line no-console
-			if((thecentroid[0] >= 350 && thecentroid[0] <= 351)){
-				//let cell = (this.time + "," + "id:" + cid + ",entry" + "," + this.C.cellKind(cid) + "," + thecentroid);
+			if((thecentroid[0] >= 350.00 && thecentroid[0] <= 360.00)){
+				let cell = {id: cid, event: "entry", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
 
-				let cell = {id: cid+"-en", event: "entry", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
-
-
-				if(!this.cellsArray.includes(cell.id)){
+				let notExists = this.checkCellsArray(cid, "entry")
+				if(notExists){
 					this.cellsArray.push(cell);
 				}
 			}
-			if((thecentroid[0] >= 550 && thecentroid[0] <= 551)){
-				//let cell = (this.time + "," + "id:" + cid + ",exit" + "," + this.C.cellKind(cid) + "," + thecentroid);
+			if((thecentroid[0] >= 550.00 && thecentroid[0] <= 560.00)){
+				let cell = {id: cid, event: "exit", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
 				
-				let cell = {id: cid+"-ex", event: "exit", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
-				
-				if(!this.cellsArray.includes(cell.id)){
+				let notExists = this.checkCellsArray(cid, "exit")
+				if(notExists){
 					this.cellsArray.push(cell);
 				}
 			}
 		}
 		//console.log(this.cellsArray);
+	}
+
+	checkCellsArray(id, event){
+		for(const cell of this.cellsArray){
+			if(cell.id == id && cell.event == event){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	getCellsArray(){
@@ -7869,7 +7875,7 @@ class Simulation {
 	saveAsCSV(name, file) {
 		const csv = `${this.name},${this.phone},${this.email}\n`;
 		try {
-			fileSync.appendFileSync("..\\output\\files\\" + name + ".csv", file);
+			fileSync.appendFileSync("output\\files\\" + name + ".csv", file);
 		} catch (err) {
 		  console.error(err);
 		}

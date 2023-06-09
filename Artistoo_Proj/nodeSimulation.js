@@ -1,5 +1,3 @@
-
-
 let CPM = require(".\\artistoo-cjs.js")
 
 let config = {
@@ -34,7 +32,7 @@ let config = {
                                                 // non-background cellkinds.
         // Runtime etc
         BURNIN : 0,
-        RUNTIME : 5000,
+        RUNTIME : 5500,
         //RUNTIME_BROWSER : "Inf",
         
         // Visualization
@@ -48,15 +46,14 @@ let config = {
 		SAVEIMG : true,					            // Should a png image of the grid be saved
 		// during the simulation?
 		IMGFRAMERATE : 499,					        // If so, do this every <IMGFRAMERATE> MCS.
-		SAVEPATH : "..\\output\\img",	            // ... And save the image in this folder.
+		SAVEPATH : "output\\img",	            // ... And save the image in this folder.
 		EXPNAME : "BaseCase",				        // Used for the filename of output images.
 		
 		// Output stats etc
 		STATSOUT : { browser: false, node: true },  // Should stats be computed?
-		LOGRATE : 10							    // Output stats every <LOGRATE> MCS.
+		LOGRATE : 1							        // Output stats every <LOGRATE> MCS.
     }
 }
-
 
 let custommethods = {
     initializeGrid : initializeGrid,
@@ -72,7 +69,6 @@ function initializeGrid(){
     if( !this.helpClasses["gm"] ){ 
         this.addGridManipulator() 
     }
-
 	
     // Define Area size, spawning cell width + height dependent on the amount of cells which are spawned.
     const areaSize = Math.ceil(Math.sqrt(100));
@@ -91,20 +87,9 @@ function initializeGrid(){
         }
     }
 
-    // FF snel checken om te kijken of we cirkels kunnen maken waar we de cells in kunnen laten spawnen.
-    // 		
-    // van [0, 0] tot [100, 200]
-    //this.channelvoxels = this.gm.makeCircle(  [50, 50], 50, [])
-
     // Vernauwing
     this.channelvoxels = this.gm.makeCircle(  [450,-115], 200, [])
     this.channelvoxels = this.gm.makeCircle(  [450,315], 200, this.channelvoxels )
-
-    //tumoren
-    //this.channelvoxels = this.gm.makeCircle(  [475,150], 25, this.channelvoxels )
-    //this.channelvoxels = this.gm.makeCircle(  [450,40], 40, this.channelvoxels )
-    //this.channelvoxels = this.gm.makeCircle(  [550,30], 57, this.channelvoxels )
-
 
     // Map settings
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 1, 0 )
@@ -114,18 +99,14 @@ function initializeGrid(){
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 649)
 
     // Setting #1:
-
     /*
     this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
     */
 
     // Setting #2:
-
-    
     //this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
     //this.channelvoxels = this.gm.makeCircle(  [200,30], 20, this.channelvoxels )
     //this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
-    
 
     // Setting #3:
     /*
@@ -133,7 +114,6 @@ function initializeGrid(){
     const x1 = 280;
     const y0 = 20;
     const y1 = 200;
-
 
     for(let x = x0; x <= x1; x += 30){
         for(let y = y0; y <= y1; y += 40){
@@ -144,7 +124,6 @@ function initializeGrid(){
 
     //this.channelvoxels = this.gm.makeCircle(  [280,70], 7, this.channelvoxels )
     //this.channelvoxels = this.gm.makeCircle(  [200,70], 7, this.channelvoxels )
-    
 
     // Add constraint to add collision
     this.C.add( new CPM.BorderConstraint({
@@ -163,7 +142,6 @@ for(i=0; i<5; i++){
     } ) )
 
     sim.clearCellsArray();
-    let csvString = [];
 
     sim.run()
 
@@ -189,7 +167,6 @@ for(i=0; i<5; i++){
 
     console.log(allCSVStrings);
 }
-
 
 const date = new Date();
 today_date = (date.getMonth()+1) + "-" + date.getDate();
