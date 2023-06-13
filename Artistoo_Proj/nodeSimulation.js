@@ -1,4 +1,4 @@
-let CPM = require(".\\artistoo-cjs.js")
+let CPM = require(".\\artistoo-cjs")
 
 let config = {
     // Grid settings
@@ -104,9 +104,9 @@ function initializeGrid(){
     */
 
     // Setting #2:
-    //this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
-    //this.channelvoxels = this.gm.makeCircle(  [200,30], 20, this.channelvoxels )
-    //this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [200,30], 20, this.channelvoxels )
+    this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
 
     // Setting #3:
     /*
