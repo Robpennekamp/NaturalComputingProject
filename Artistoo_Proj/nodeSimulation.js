@@ -99,9 +99,9 @@ function initializeGrid(){
     this.channelvoxels = this.gm.makePlane( this.channelvoxels, 0, 649)
 
     // Setting #1:
-    /*
-    this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
-    */
+    
+    //this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
+    
 
     // Setting #2:
     //this.channelvoxels = this.gm.makeCircle(  [265,100], 50, this.channelvoxels )
@@ -109,7 +109,7 @@ function initializeGrid(){
     //this.channelvoxels = this.gm.makeCircle(  [200,170], 20, this.channelvoxels )
 
     // Setting #3:
-    /*
+    
     const x0 = 180
     const x1 = 280;
     const y0 = 20;
@@ -120,7 +120,7 @@ function initializeGrid(){
             this.channelvoxels = this.gm.makeCircle( [x, y], 5, this.channelvoxels)
         }
     }
-    */
+    
 
     //this.channelvoxels = this.gm.makeCircle(  [280,70], 7, this.channelvoxels )
     //this.channelvoxels = this.gm.makeCircle(  [200,70], 7, this.channelvoxels )
@@ -166,6 +166,7 @@ for(i=0; i<100; i++){
     allCSVStrings += csvString + "\n";
 
     console.log(allCSVStrings);
+    console.log(i)
 }
 
 const date = new Date();
