@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+const path = require('path');
+
+// Make sure that it also find the config folder when it
+// did get started from another folder that the root one.
+process.env.NODE_CONFIG_DIR = process.env.NODE_CONFIG_DIR || path.join(__dirname, 'config');
+
+// Check if version should be displayed
+const versionFlags = ['-v', '-V', '--version'];
+if (versionFlags.includes(process.argv.slice(-1)[0])) {
+	console.log(require('../package').version);
+	process.exit(0);
+}
+
+if (process.argv.length === 2) {
+	// When no command is given choose by default start
+	process.argv.push('start');
+}
+
+const nodeVersion = process.versions.node;
+const nodeVersionMajor = require('semver').major(nodeVersion);
+
+if (![16, 18].includes(nodeVersionMajor)) {
+	console.log(`
+	Your Node.js version (${nodeVersion}) is currently not supported by n8n.
+	Please use Node.js v16 (recommended), or v18 instead!
+	`);
+	process.exit(1);
+}
+
+// Prevent oclif from loading ts-node and typescript
+process.env.OCLIF_TS_NODE = '0';
+
+require('express-async-errors');
+require('source-map-support').install();
+require('reflect-metadata');
+
+require('@oclif/command')
+	.run()
+	.then(require('@oclif/command/flush'))
+	.catch(require('@oclif/errors/handle'));

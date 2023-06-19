@@ -1,0 +1,3 @@
+/// <reference types="node" />
+import type { Readable } from 'stream';
+export declare const binaryToBuffer: (body: Buffer | Readable) => Promise<Buffer>;
