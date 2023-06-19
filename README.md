@@ -1,5 +1,5 @@
 # Natural Computing Project
-This project is based on the Artistoo.net framework. However, some code in the "artistoo-cjs.js" file is altered to better fit the project. The changed code has mostly to do with logging and when the simulation should stop. the changes can be seen below.
+This project is based on the Artistoo.net framework. However, some code in the "artistoo-cjs.js" file is altered to better fit the project. The changed code has mostly to do with logging and when the simulation should stop. The altered code can be seen below.
 
 Logging:
 ```
