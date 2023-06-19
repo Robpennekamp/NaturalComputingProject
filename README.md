@@ -58,6 +58,18 @@ Simulation:
 ```
 Here the condition to stop after 80 of the 100 cells per run have hit the desired checkpoint is added. This made sure the runs were a little bit shorter and unnecessary data is not being added to the CSV file.
 
+Furthermore, we also added a function which made it easier to save logs in a CSV file, this function looks as follows:
+```
+saveAsCSV(name, file) {
+		const csv = `${this.name},${this.phone},${this.email}\n`;
+		try {
+			fileSync.appendFileSync("output\\files\\" + name + ".csv", file);
+		} catch (err) {
+		  console.error(err);
+		}
+	  }
+```
+
 ## How to run:
 ### Browser example
 Artistoo can be used to create interactive simulations in the web-browser. We have created a single browser example which can be used to simulate the result mentioned in our report. To run the browser example, open/click on the Project_simulation.html file in the artistoo_proj folder.
