@@ -7866,7 +7866,7 @@ class Simulation {
 	
 	/** Run the entire simulation. This function is meant for nodejs, as you'll
 	want to perform individual {@link step}s in a requestAnimationFrame for an 
-	animation in a HTML page. An early stopping step has been added to reduce calculation time*/
+	animation in a HTML page. */
 	run(){
 		while( this.time < this.conf["RUNTIME"] && this.exitCells.length <= 80){
 		
