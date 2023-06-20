@@ -1,8 +1,78 @@
 # Natural Computing Project
+This project is based on the Artistoo.net framework. However, some code in the "artistoo-cjs.js" file is altered to better fit the project. The changed code has mostly to do with logging and when the simulation should stop. The altered code can be seen below.
+
+Logging:
+```
+	logStats(){
+		
+		// compute centroids for all cells
+		let allcentroids; 
+		let torus = false;
+		for( let d = 0; d < this.C.grid.ndim; d++ ){
+			if( this.C.grid.torus[d] ){
+				torus = true;
+			}
+		}
+		if( torus ){
+			allcentroids = this.C.getStat( CentroidsWithTorusCorrection );
+		} else {
+			allcentroids = this.C.getStat( Centroids );
+		} 
+		
+		for( let cid of this.C.cellIDs() ){
+		
+			let thecentroid = allcentroids[cid];
+			
+			// eslint-disable-next-line no-console
+			if((thecentroid[0] >= 350.00 && thecentroid[0] <= 360.00)){
+				let cell = {id: cid, event: "entry", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
+
+				let notExists = this.checkCellsArray(cid, "entry")
+				if(notExists){
+					this.cellsArray.push(cell);
+				}
+			}
+			if((thecentroid[0] >= 550.00 && thecentroid[0] <= 560.00)){
+				let cell = {id: cid, event: "exit", frame: this.time, cellkind: this.C.cellKind(cid), coords: thecentroid}
+				
+				let notExists = this.checkCellsArray(cid, "exit")
+				if(notExists){
+					this.cellsArray.push(cell);
+					this.exitCells.push(cell);
+				}
+			}
+		}
+	}
+```
+Here the code is altered to only add a cell to the logs if it hits the entry and exit checkpoints. We needed this to calculate the average time it takes to traverse the narrowing.
+
+Simulation:
+```
+	run(){
+		while( this.time < this.conf["RUNTIME"] && this.exitCells.length <= 80){
+		
+			this.step();
+			
+		}
+	}
+```
+Here the condition to stop after 80 of the 100 cells per run have hit the desired checkpoint is added. This made sure the runs were a little bit shorter and unnecessary data is not being added to the CSV file.
+
+Furthermore, we also added a function which made it easier to save logs in a CSV file, this function looks as follows:
+```
+saveAsCSV(name, file) {
+		const csv = `${this.name},${this.phone},${this.email}\n`;
+		try {
+			fileSync.appendFileSync("output\\files\\" + name + ".csv", file);
+		} catch (err) {
+		  console.error(err);
+		}
+	  }
+```
 
 ## How to run:
 ### Browser example
-Artistoo can be used to create interactive simulations in the web-browser. We have created a single browser example which van be used to simulate the result mentioned in our report. To run the browser example, open/click on the Project_simulation.html file in the artistoo_proj folder.
+Artistoo can be used to create interactive simulations in the web-browser. We have created a single browser example which can be used to simulate the result mentioned in our report. To run the browser example, open/click on the Project_simulation.html file in the artistoo_proj folder.
 
 ### Node example
 Simulations can also be run from the command line using Node.js. The first time you do this, you have to install several dependencies. Go to the base folder of this package and run
