@@ -7795,7 +7795,6 @@ class Simulation {
 				}
 			}
 		}
-		//console.log(this.cellsArray);
 	}
 
 	checkCellsArray(id, event){
