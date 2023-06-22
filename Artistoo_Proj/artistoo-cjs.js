@@ -7875,7 +7875,6 @@ class Simulation {
 	}
 
 	saveAsCSV(name, file) {
-		const csv = `${this.name},${this.phone},${this.email}\n`;
 		try {
 			fileSync.appendFileSync("output\\files\\" + name + ".csv", file);
 		} catch (err) {
