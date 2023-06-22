@@ -61,7 +61,6 @@ Here the condition to stop after 80 of the 100 cells per run have hit the desire
 Furthermore, we also added a function which made it easier to save logs in a CSV file, this function looks as follows:
 ```
 saveAsCSV(name, file) {
-		const csv = `${this.name},${this.phone},${this.email}\n`;
 		try {
 			fileSync.appendFileSync("output\\files\\" + name + ".csv", file);
 		} catch (err) {
